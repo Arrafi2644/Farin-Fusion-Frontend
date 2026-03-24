@@ -41,7 +41,7 @@ export function NavbarDropdown({ user, onLogout }: any) {
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             {/* <Link href="/dashboard/profile"> */}
-            <Link href={user.role === "CUSTOMER" ? "/customer/dashboard/my-orders" : "/moderator/dashboard"}>
+            <Link href={user.role === "CUSTOMER" ? "/customer/dashboard/my-orders" : "/staff/dashboard"}>
 
               <User2 />
               Dashboard
