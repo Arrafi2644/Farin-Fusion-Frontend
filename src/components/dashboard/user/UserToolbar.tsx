@@ -3,7 +3,7 @@
 
 import { SearchForm } from "@/components/shared/search-form";
 import Sort from "@/components/shared/Sort";
-// import { RegisterForm } from "./RegisterModal";
+import RegisterModal from "./RegisterModal";
 
 type UserToolbarProps = {
     onSearchChange?: (value: string) => void;
@@ -23,7 +23,7 @@ export default function UserToolbar({ onSearchChange, onSortChange }: UserToolba
                 <Sort onChange={onSortChange} />
             </div>
             {/* Register User Modal */}
-            {/* <RegisterForm /> */}
+            <RegisterModal />
         </div>
     );
 }

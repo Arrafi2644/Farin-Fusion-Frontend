@@ -3,7 +3,7 @@
 
 "use client";
 
-import { useGetAllUsersQuery, useDeleteUserMutation } from "@/redux/features/user/user.api";
+import { useGetAllUsersQuery, useDeleteUserMutation, useGetAllCustomersQuery } from "@/redux/features/user/user.api";
 import { IUser } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { toast } from "sonner";
@@ -17,9 +17,8 @@ import TablePagination from "@/components/shared/TablePagination";
 import { DynamicDataTable } from "@/components/dashboard/DataTable";
 import DashboardManagementPageSkeleton from "@/components/dashboard/DashboardManagePageSkeleton";
 import DashboardPageHeader from "@/components/dashboard/DashboardPageHeader";
-import UpdateUserModal from "@/components/dashboard/user/UpdateUserModal";
 
-const UserManagementPage = () => {
+const CustomerManagementPage = () => {
   const [deleteUser] = useDeleteUserMutation();
 
   const [searchTerm, setSearchTerm] = React.useState("");
@@ -27,7 +26,7 @@ const UserManagementPage = () => {
   const [page, setPage] = React.useState(1);
   const limit = 10;
 
-  const { data, isLoading, isError } = useGetAllUsersQuery({
+  const { data, isLoading, isError } = useGetAllCustomersQuery({
     ...(searchTerm && { searchTerm }),
     ...(sort && { sort }),
     page,
@@ -38,8 +37,6 @@ const UserManagementPage = () => {
   // Modal states
   const [selectedUser, setSelectedUser] = React.useState<IUser | null>(null);
   const [openViewModal, setOpenViewModal] = React.useState(false);
-  const [userToUpdate, setUserToUpdate] = React.useState<IUser | null>(null);
-  const [openUpdateModal, setOpenUpdateModal] = React.useState(false);
   const [userToDelete, setUserToDelete] = React.useState<IUser | null>(null);
   const [openDeleteAlert, setOpenDeleteAlert] = React.useState(false);
 
@@ -59,7 +56,6 @@ const UserManagementPage = () => {
   const columns: ColumnDef<IUser>[] = [
     { accessorKey: "name", header: "Name" },
     { accessorKey: "email", header: "Email" },
-    { accessorKey: "role", header: "Role" },
   ];
 
   // Actions
@@ -69,13 +65,6 @@ const UserManagementPage = () => {
       onClick: (user: IUser) => {
         setSelectedUser(user);
         setOpenViewModal(true);
-      },
-    },
-    {
-      label: "Edit",
-      onClick: (user: IUser) => {
-        setUserToUpdate(user);
-        setOpenUpdateModal(true);
       },
     },
     {
@@ -95,7 +84,7 @@ const UserManagementPage = () => {
 
   return (
     <div>
-      <DashboardPageHeader title="User Management" />
+      <DashboardPageHeader title="Customer Management" />
       <UserToolbar
         onSearchChange={setSearchTerm}
         onSortChange={setSort}
@@ -117,15 +106,6 @@ const UserManagementPage = () => {
         />
       )}
 
-      {/* Update Modal */}
-      {userToUpdate && (
-        <UpdateUserModal
-          open={openUpdateModal}
-          onOpenChange={setOpenUpdateModal}
-          user={userToUpdate}
-        />
-      )}
-
       {/* Delete Confirmation */}
       {userToDelete && (
         <DeleteAlert
@@ -143,4 +123,4 @@ const UserManagementPage = () => {
   );
 };
 
-export default UserManagementPage;
+export default CustomerManagementPage;

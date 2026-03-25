@@ -39,17 +39,32 @@ export interface ISidebarItem {
   }[]
 
 }
+
+export enum Role {
+    ADMIN = "ADMIN",
+    MANAGER = "MANAGER",
+    MODERATOR = "MODERATOR",
+    CUSTOMER = "CUSTOMER"
+}
+export enum IsActive {
+    ACTIVE = "ACTIVE",
+    INACTIVE = "INACTIVE",
+    BLOCKED = "BLOCKED"
+}
+
 export interface IUser {
-  _id: string
-  name: string
-  email: string
-  role: "ADMIN" | "MANAGER" | "MODERATOR" | "CUSTOMER"
-  password: string
-  picture: string
-  phone?: string
-  address?: string
-  createdAt: string
-  updatedAt: string
+    _id?: Types.ObjectId;
+    name: string;
+    email: string;
+    password?: string;
+    phone?: string;
+    address: string;
+    picture?: string;
+    isActive?: IsActive;
+    isVerified?: boolean;
+    isDeleted?: boolean;
+    salary?: number;
+    role: Role;
 }
 
 export interface IUserApiResponse {

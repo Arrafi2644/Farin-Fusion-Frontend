@@ -3,20 +3,20 @@ import { baseApi } from "../baseApi";
 import type { IUser, IUserApiResponse, IResponse, GetQueryParams, IPaginationMeta } from "@/types";
 
 interface GetAllUsersResponse {
-    success: boolean;
-    data: IUser[];
-    meta: IPaginationMeta;
+  success: boolean;
+  data: IUser[];
+  meta: IPaginationMeta;
 }
 
 export const userApi = baseApi.injectEndpoints({
 
   // CREATE USER
   endpoints: (builder) => ({
-    register: builder.mutation<IResponse<IRegisterResponse>, IRegister>({
-      query: (userInfo) => ({
+    register: builder.mutation<IResponse<IRegisterResponse>, FormData>({
+      query: (formData) => ({
         url: "/user/create-user",
         method: "POST",
-        data: userInfo
+        data: formData,
       }),
       invalidatesTags: (result, error, arg) => ["USERS"],
     }),
@@ -24,7 +24,7 @@ export const userApi = baseApi.injectEndpoints({
     // UPDATE USER
     updateUser: builder.mutation<
       IResponse<IUser>,
-      { id: string; data: Partial<IUser> }
+      { id: string; data: FormData }
     >({
       query: ({ id, data }) => ({
         url: `/user/${id}`,
@@ -67,15 +67,24 @@ export const userApi = baseApi.injectEndpoints({
       providesTags: ["USERS"],
     }),
 
+    getAllCustomers: builder.query<GetAllUsersResponse, GetQueryParams>({
+      query: (params) => ({
+        url: "/user/all-customers",
+        method: "GET",
+        params: params
+      }),
+      providesTags: ["CUSTOMERS"],
+    }),
+
     //  GET ME (Logged-in user's own profile)
     getMe: builder.query<IUserApiResponse, void>({
       query: () => ({
-        url: "/user/me",      
+        url: "/user/me",
         method: "GET",
       }),
- 
+
       providesTags: ["ME", "USER"],
-    }),    
+    }),
   }),
   overrideExisting: true,
 });
@@ -86,5 +95,6 @@ export const {
   useDeleteUserMutation,
   useGetSingleUserQuery,
   useGetAllUsersQuery,
+  useGetAllCustomersQuery,
   useGetMeQuery
 } = userApi;
