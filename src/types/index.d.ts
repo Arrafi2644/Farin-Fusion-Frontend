@@ -64,9 +64,39 @@ export interface IUser {
     isVerified?: boolean;
     isDeleted?: boolean;
     salary?: number;
-    role: Role;
+    role?: Role;
+    createdAt?: string
+    updatedAt?: string
 }
 
 export interface IUserApiResponse {
   data: IUser;
+}
+
+export enum CategoryStatus {
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
+}
+
+export interface ICategory {
+  _id: string;
+  title: string;
+  slug: string;
+  description: string;
+  image: string;
+  status: CategoryStatus;
+}
+
+export enum BrandStatus {
+    ACTIVE = "ACTIVE",
+    INACTIVE = "INACTIVE",
+}
+
+export interface IBrand {
+  _id: string
+    title: string;
+    slug: string;
+    description: string;
+    image: string;
+    status: BrandStatus;
 }

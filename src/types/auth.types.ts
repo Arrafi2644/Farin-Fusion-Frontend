@@ -12,16 +12,17 @@ export interface ILogin {
 }
 
 export interface IRegisterResponse {
+    _id: string
     name: string
-  email: string
-  password: string
-  role: string
-  isDeleted: boolean
-  isActive: string
-  isVerified: boolean
-  _id: string
-  createdAt: string
-  updatedAt: string
+    email: string
+    password: string
+    role: string
+    isDeleted: boolean
+    isActive: string
+    isVerified: boolean
+    salary?: number;
+    createdAt?: string
+    updatedAt?: string
 }
 
 
